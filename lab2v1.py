@@ -1,4 +1,5 @@
 def func(filepath):
+    import os
     from Bio import SeqIO
     from Bio.SeqUtils import gc_fraction
     numb = 0
@@ -20,5 +21,5 @@ def func(filepath):
                     gc=gc_new
                     gcid=i
     print(f"{seqs[gcid].id}\n{gc*100:.6f}")
-    
-func("C:\\Users\\user\\Downloads\\IN 2.txt")
+
+os.path.splitext("IN 2.txt")
