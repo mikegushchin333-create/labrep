@@ -1,14 +1,11 @@
 from Bio import SeqIO
-def gccount(seq):
-    gc = seq.count('G') + seq.count('C')
-    total = len(seq)
-    return gc / total
-def sorting(gbk_file):
-    records = []
-    for record in SeqIO.parse(gbk_file, "genbank"):
-        gc = gccount(record.seq)
-        records.append((record, gc))
-    records.sort(key=lambda x: x[1])
-    for rec, gc in records:
-        desc = rec.description
-        print(f"{rec.id}: {desc}, GC = {gc}")
+from Bio.SeqUtils import gc_fraction
+def gcsort(gb_path):
+    gbs = list(SeqIO.parse(gb_path, "genbank"))
+    unsorted=[]
+    for gb in gbs:
+        gc = gc_fraction(gb.seq)
+        unsorted.append((gb.id, gb.description, gc))
+    sorted_data=sorted(unsorted,key=lambda x: x[2])
+    for gb in sorted_data:
+            print(f"{gb[0]}: {gb[1]}, GC = {gb[2]}")
